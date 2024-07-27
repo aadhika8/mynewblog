@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Http\Controllers;
+
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -22,11 +25,10 @@ class PostController extends Controller
             'content' => 'required',
         ]);
 
-        Post::create($request->all());
+        Post::create($request->except('_token'));
 
-        return redirect()->route('posts.index')
-                        ->with('success', 'Post created successfully.');
-    }
+    return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+}
 
     public function show(Post $post)
     {
@@ -47,16 +49,13 @@ class PostController extends Controller
 
         $post->update($request->all());
 
-        return redirect()->route('posts.index')
-                        ->with('success', 'Post updated successfully.');
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
 
-        return redirect()->route('posts.index')
-                        ->with('success', 'Post deleted successfully.');
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
     }
 }
-

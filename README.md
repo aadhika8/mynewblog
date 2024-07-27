@@ -64,3 +64,26 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+# Basic Blog Application
+
+GitHub Repository: [https://github.com/aadhika8/mynewblog](https://github.com/aadhika8/mynewblog)
+
+## Overview
+
+This Basic Blog Application is built using Laravel 11. The application provides a simple interface to manage blog posts, including functionalities for creating, reading, updating, and deleting posts. The project aims to demonstrate basic CRUD operations and Laravel's capabilities for web application development.
+
+## Features
+
+- **Create**: Users can add new blog posts with titles and content.
+- **Read**: Users can view a list of all blog posts and individual post details.
+- **Update**: Users can edit existing blog posts.
+- **Delete**: Users can remove blog posts from the application.
+
+## Setup and Installation
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/aadhika8/mynewblog.git
