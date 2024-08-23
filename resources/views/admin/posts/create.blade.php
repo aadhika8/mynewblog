@@ -7,7 +7,14 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Create Post') }}</div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div>
+                            {{ __('Create Post') }}
+                        </div>
+                        <div>
+                            <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">Back</a>
+                        </div>
+                    </div>
 
                     <div class="card-body">
                         @if (session('success'))

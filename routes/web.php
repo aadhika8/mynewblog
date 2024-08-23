@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Author\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +23,7 @@ Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
-        Route::resource('posts', PostController::class);
+        Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
         Route::resource('users', UserController::class);
     });
 
@@ -33,5 +32,5 @@ Route::prefix('author')
     ->middleware(['auth', 'author'])
     ->group(function () {
         Route::get('/home', [App\Http\Controllers\Author\HomeController::class, 'index'])->name('home');
-        Route::resource('posts', PostController::class);
+        Route::resource('posts', \App\Http\Controllers\Author\PostController::class);
     });
