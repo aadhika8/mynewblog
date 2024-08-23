@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Author\PostController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -10,12 +12,26 @@ Route::get('/', function () {
 //Route::resource('posts', PostController::class);
 
 Auth::routes();
+Route::get('/home', function () {
+    if (!Auth::check()) return redirect()->route('login');
+    return Auth::user()->hasRole('admin') ? redirect()->route('admin.home') : redirect()->route('author.home');
+
+})->name('home');
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')
+    ->as('admin.')
+    ->middleware(['auth', 'admin'])
+    ->group(function () {
+        Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
+        Route::resource('posts', PostController::class);
+        Route::resource('users', UserController::class);
+    });
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    Route::resource('posts', PostController::class);
-    Route::resource('posts', PostController::class);
-});
+Route::prefix('author')
+    ->as('author')
+    ->middleware(['auth', 'author'])
+    ->group(function () {
+        Route::get('/home', [App\Http\Controllers\Author\HomeController::class, 'index'])->name('home');
+        Route::resource('posts', PostController::class);
+    });
