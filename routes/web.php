@@ -29,7 +29,7 @@ Route::prefix('admin')
     });
 
 Route::prefix('author')
-    ->as('author')
+    ->as('author.')
     ->middleware(['auth', 'author'])
     ->group(function () {
         Route::get('/home', [App\Http\Controllers\Author\HomeController::class, 'index'])->name('home');

@@ -1,6 +1,6 @@
-@extends('layouts.admin')
-@section('title', 'Admin Home')
+@extends('layouts.author')
 
+@section('title', 'Author Home')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                             </div>
                         @endif
 
-                        {{ __('You are logged in as Admin!') }}
+                        {{ __('You are logged in as Author!') }}
                     </div>
                 </div>
             </div>

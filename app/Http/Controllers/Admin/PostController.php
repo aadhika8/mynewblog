@@ -6,39 +6,40 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
-{
+class PostController extends Controller {
     public function index()
     {
         $posts = Post::all();
-        return view('posts.index', compact('posts'));
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     public function create()
     {
-        return view('posts.create');
+        return view('admin.posts.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $postData = $request->validate([
             'title' => 'required',
             'content' => 'required',
         ]);
 
-        Post::create($request->except('_token'));
+        $postData['user_id'] = auth()->user()->id;
+        Post::create($postData);
 
-    return redirect()->route('posts.index')->with('success', 'Post created successfully.');
-}
+        return redirect()->route('admin.posts.index')->with('success', 'Post created successfully.');
+    }
 
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        return view('admin.posts.show', compact('post'));
     }
 
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
@@ -50,13 +51,13 @@ class PostController extends Controller
 
         $post->update($request->all());
 
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+        return redirect()->route('admin.posts.index')->with('success', 'Post updated successfully.');
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+        return redirect()->route('admin.posts.index')->with('success', 'Post deleted successfully.');
     }
 }

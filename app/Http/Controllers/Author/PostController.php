@@ -10,39 +10,44 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        $posts = Post::where('user_id', auth()->user()->id)->get();
+        return view('author.posts.index', compact('posts'));
     }
 
     public function create()
     {
-        return view('posts.create');
+        return view('author.posts.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $postData = $request->validate([
             'title' => 'required',
             'content' => 'required',
         ]);
 
-        Post::create($request->except('_token'));
+        $postData['user_id'] = auth()->user()->id;
+        Post::create($postData);
 
-    return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+    return redirect()->route('author.posts.index')->with('success', 'Post created successfully.');
 }
 
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        if (!$post->user_id == auth()->user()->id) abort(403);
+        return view('author.posts.show', compact('post'));
     }
 
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        if (!$post->user_id == auth()->user()->id) abort(403);
+        return view('author.posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
+        if (!$post->user_id == auth()->user()->id) abort(403);
+
         $request->validate([
             'title' => 'required',
             'content' => 'required',
@@ -50,13 +55,14 @@ class PostController extends Controller
 
         $post->update($request->all());
 
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+        return redirect()->route('author.posts.index')->with('success', 'Post updated successfully.');
     }
 
     public function destroy(Post $post)
     {
+        if (!$post->user_id == auth()->user()->id) abort(403);
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+        return redirect()->route('author.posts.index')->with('success', 'Post deleted successfully.');
     }
 }
