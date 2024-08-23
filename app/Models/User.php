@@ -44,8 +44,22 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public const ADMIN = 'admin';
+    public const AUTHOR = 'author';
+    public const USER = 'user';
+    public const ROLES = [
+        self::ADMIN,
+        self::AUTHOR,
+        self::USER
+    ];
+
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role === $role;
     }
 }
