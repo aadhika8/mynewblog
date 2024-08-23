@@ -49,7 +49,6 @@
                             <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Author Name</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -57,7 +56,6 @@
                             @foreach ($posts as $post)
                                 <tr>
                                     <td><a href="{{ route('admin.posts.show', $post->id) }}">{{ $post->title }}</a> </td>
-                                    <td><a href="{{ route('admin.users.show', $post->user->id) }}">{{ $post->user->name }}</a> </td>
                                     <td>
                                         <a class="btn btn-success" href="{{ route('admin.posts.edit', $post->id) }}">Edit</a>
                                         <form onsubmit="return confirm('Are you sure? This action cannot be undone')" action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" style="display:inline;">
