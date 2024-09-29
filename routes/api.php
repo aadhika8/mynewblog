@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
-    Route::apiResource('posts', \App\Http\Controllers\Admin\PostController::class)->only(['index', 'show']);
+    Route::apiResource('posts', PostController::class)->only(['index', 'show']);
 });
